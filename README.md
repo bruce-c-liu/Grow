@@ -14,6 +14,7 @@ Play at: https://bruce-c-liu.github.io/Grow/
 
 6/1/20
 - NEW: Added jump "tail" to indicate how many jumps have occured in midair.
+- BALANCE: Platforms are now much narrower.
 - CHANGED: Lava is now animated!
 - CHANGED: Midair max jumps from unlimited to 2.
 - CHANGED: Platforms now have dynamic width.

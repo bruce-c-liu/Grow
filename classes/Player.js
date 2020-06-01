@@ -17,6 +17,9 @@ export class Player {
     this.gravity = 2500;
     this.maxJumps = 2;
 
+    // player lifetime stats
+    this.exp = 0;
+
     // book-keeping variables
     this.xSpeed = -this.terrainScrollSpeed;
     this.ySpeed = 0;

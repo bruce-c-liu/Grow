@@ -12,7 +12,7 @@ export class Hole {
 
   update(secondsElapsed, checkPlayerCollision = false, player, terrainScrollSpeed) {
     if (checkPlayerCollision) {
-      let playerBottomY = player.y + player.height;
+
       if (player.state === 'IDLE') {
         player.state = 'FALLING';
       }

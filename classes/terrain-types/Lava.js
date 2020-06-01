@@ -11,7 +11,7 @@ export class Lava {
     this.canvas = ctx.canvas;
 
     this.width = ctx.canvas.width;
-    this.height = this.MAX_CHUNK_HEIGHT;
+    this.height = this.MAX_CHUNK_HEIGHT + 5; // +5 for tolerance: dy sometimes moves the chunk too far up.
     this.x = 0;
     this.y = ctx.canvas.height - this.height;
     this.color = 'red';
