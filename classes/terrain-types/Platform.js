@@ -17,8 +17,6 @@ export class Platform {
       // player above platform
       if (player.state === 'FALLING' && this.y <= playerBottomY && playerBottomY <= this.y + this.height) {
         player.land(this.y - player.height);
-      } else if (player.state === 'IDLE') {
-        player.state = 'FALLING';
       }
     }
 

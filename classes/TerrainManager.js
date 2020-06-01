@@ -1,6 +1,6 @@
 import { Platform } from './terrain-types/Platform.js';
 import { Lava } from './terrain-types/Lava.js';
-import { randomBetween } from '../utils.js';
+import { randomIntBetween } from '../utils.js';
 
 export class TerrainManager {
   constructor(ctx, player, terrainScrollSpeed) {
@@ -12,7 +12,7 @@ export class TerrainManager {
 
     for (let x = 1800; x < 20000; x += 300) {
       this.terrains.push(
-        new Platform(ctx, x, randomBetween(40, ctx.canvas.height - 30), randomBetween(100, 200))
+        new Platform(ctx, x, randomIntBetween(40, ctx.canvas.height - 30), randomIntBetween(100, 200))
       );
     }
   }
