@@ -1,23 +1,19 @@
 import { Platform } from './terrain-types/Platform.js';
 import { Hole } from './terrain-types/Hole.js';
+import { Lava } from './terrain-types/Lava.js';
 
 export class TerrainManager {
   constructor(ctx, canvas, player, terrainScrollSpeed) {
-    console.log('hi')
     this.PLAYER = player;
     this.terrainScrollSpeed = terrainScrollSpeed;
     this.terrains = [
       new Platform(ctx, canvas, 0, canvas.height - 10),
       new Platform(ctx, canvas, 300, canvas.height - 230),
-      new Hole(ctx, canvas, 300),
-      new Hole(ctx, canvas, 600),
+      new Lava(ctx, canvas)
     ];
-
-    let x = 0;
 
     for (let x = 900; x < 20000; x += 300) {
       this.terrains.push(new Platform(ctx, canvas, x, Math.random() * canvas.height));
-      this.terrains.push(new Hole(ctx, canvas, x));
     }
   }
 

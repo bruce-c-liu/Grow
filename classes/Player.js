@@ -6,12 +6,12 @@ export class Player {
     this.canvas = canvas;
     this.height = 30;
     this.width = 30;
-    this.x = 30;
+    this.x = canvas.width / 2;
     this.y = canvas.height / 2;
     this.TERRAIN_SCROLL_SPEED = terrainScrollSpeed;
     this.BODY_COLOR = 'rgb(3, 214, 144)';
     this.EYE_COLOR = 'black';
-    this.STRAFE_SPEED = 300 * gameSpeed; // speed of moving left/right
+    this.STRAFE_SPEED = 100 * gameSpeed; // speed of moving left/right
     this.JUMP_SPEED = -900; // initial speed of player jumping up
     this.GRAVITY = 3000;
 
@@ -19,7 +19,6 @@ export class Player {
     this.xSpeed = -this.TERRAIN_SCROLL_SPEED;
     this.ySpeed = 0;
     this.Y_SPEED_MAX = 950; // max ySpeed. (limit this to prevent falling through platforms)
-    this.yJumped = 0; // vertical distance jumped. Max distance determined by this.maxJumpHeight
     this.state = 'FALLING'; // [IDLE, JUMPING, FALLING]
     this.isDucking = false;
     this.isMovingLeft = false;
@@ -27,6 +26,11 @@ export class Player {
   }
 
   update(secondsElapsed) {
+    // player exited left frame
+    if (this.x + this.width < 0) {
+      this.reset();
+    }
+
     if (this.state === 'JUMPING' || this.state === 'FALLING') {
       // https://gamedev.stackexchange.com/questions/15708/how-can-i-implement-gravity/41917#41917
       // Verlot method. Apparently it's better than Euler's method.
@@ -110,7 +114,6 @@ export class Player {
   jump() {
     this.state = 'JUMPING';
     this.ySpeed = this.JUMP_SPEED;
-    this.yJumped = 0;
     if (!jumpSFX.paused) {
       jumpSFX.load();
     }
@@ -132,11 +135,10 @@ export class Player {
   }
 
   reset() {
-    this.x = 30;
-    this.y = this.canvas.height / 2;
+    this.x = this.canvas.width / 2 + 100;
+    this.y = 0;
     // this.xSpeed = 0;
     this.ySpeed = 0;
-    this.yJumped = 0;
     this.state = 'FALLING';
   }
 }
