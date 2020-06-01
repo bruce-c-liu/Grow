@@ -82,11 +82,14 @@ export class Player {
       this.ctx.ellipse(this.x + this.width - 7, this.y + 12, 3, 6, 0, -0.9 * Math.PI, 0.9 * Math.PI);
       this.ctx.fill();
 
-      // this.ctx.fillRect(this.x + this.width - 10, this.y + 6, 4, 10);
-
+      // jumping "tail"
       if (this.state === 'JUMPING') {
-        this.ctx.fillStyle = '#94ebce';
-        this.ctx.fillRect(this.x + 2, this.y + this.height + 4, this.width - 3.5, 3);
+        this.ctx.fillStyle = '#94ebdd';
+        this.ctx.fillRect(this.x + 2, this.y + this.height + 4, this.width - 3.5, 2);
+
+        if (this.curJumps === 2) {
+          this.ctx.fillRect(this.x + 6, this.y + this.height + 10, this.width - 11.5, 2);
+        }
       }
     }
   }
