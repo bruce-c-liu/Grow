@@ -1,21 +1,22 @@
 const jumpSFX = new Audio('assets/sounds/jump2.wav');
 
 export class Player {
-  constructor(ctx, canvas, gameSpeed) {
+  constructor(ctx, canvas, terrainScrollSpeed, gameSpeed) {
     this.ctx = ctx;
     this.canvas = canvas;
     this.height = 30;
     this.width = 30;
     this.x = 30;
     this.y = canvas.height / 2;
+    this.TERRAIN_SCROLL_SPEED = terrainScrollSpeed;
     this.BODY_COLOR = 'rgb(3, 214, 144)';
     this.EYE_COLOR = 'black';
-    this.STRAFE_SPEED = 200 * gameSpeed; // speed of moving left/right
+    this.STRAFE_SPEED = 300 * gameSpeed; // speed of moving left/right
     this.JUMP_SPEED = -900; // initial speed of player jumping up
     this.GRAVITY = 3000;
 
     // book-keeping variables
-    this.xSpeed = 0;
+    this.xSpeed = -this.TERRAIN_SCROLL_SPEED;
     this.ySpeed = 0;
     this.Y_SPEED_MAX = 950; // max ySpeed. (limit this to prevent falling through platforms)
     this.yJumped = 0; // vertical distance jumped. Max distance determined by this.maxJumpHeight
@@ -39,7 +40,7 @@ export class Player {
       }
     }
 
-    this.x = this.x + this.xSpeed * secondsElapsed;
+    this.x += this.xSpeed * secondsElapsed;
   }
 
   draw() {
@@ -87,7 +88,7 @@ export class Player {
   strafe(direction) {
     if (direction === 'left') {
       this.isMovingLeft = true;
-      this.xSpeed = -this.STRAFE_SPEED;
+      this.xSpeed = -this.STRAFE_SPEED - this.TERRAIN_SCROLL_SPEED;
     } else if (direction === 'right') {
       this.isMovingRight = true;
       this.xSpeed = this.STRAFE_SPEED;
@@ -97,10 +98,12 @@ export class Player {
   endStrafe(direction) {
     if (direction === 'left') {
       this.isMovingLeft = false;
-      this.xSpeed = this.isMovingRight ? this.STRAFE_SPEED : 0;
+      this.xSpeed = this.isMovingRight ? this.STRAFE_SPEED : -this.TERRAIN_SCROLL_SPEED;
     } else if (direction === 'right') {
       this.isMovingRight = false;
-      this.xSpeed = this.isMovingLeft ? -this.STRAFE_SPEED : 0;
+      this.xSpeed = this.isMovingLeft
+        ? -this.STRAFE_SPEED - this.TERRAIN_SCROLL_SPEED
+        : -this.TERRAIN_SCROLL_SPEED;
     }
   }
 

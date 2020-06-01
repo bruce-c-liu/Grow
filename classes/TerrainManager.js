@@ -2,9 +2,10 @@ import { Platform } from './terrain-types/Platform.js';
 import { Hole } from './terrain-types/Hole.js';
 
 export class TerrainManager {
-  constructor(ctx, canvas, player, gameSpeed) {
+  constructor(ctx, canvas, player, terrainScrollSpeed) {
+    console.log('hi')
     this.PLAYER = player;
-    this.terrainScrollSpeed = 500 * gameSpeed;
+    this.terrainScrollSpeed = terrainScrollSpeed;
     this.terrains = [
       new Platform(ctx, canvas, 0, canvas.height - 10),
       new Platform(ctx, canvas, 300, canvas.height - 230),
