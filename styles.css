@@ -1,0 +1,21 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+canvas {
+  border: 1px solid white;
+}
+
+#menu {
+  color: white;
+  position: absolute;
+  width: 1200px;
+  height: 600px;
+}
