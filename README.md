@@ -4,13 +4,9 @@ Roguelite sidescroller game where you get stronger every run!
 
 Play at: https://bruce-c-liu.github.io/Grow/
 
----
-
 ## Contributing
 
 Ideas and suggestions are welcome by opening issues. :)
-
----
 
 ## Patch Notes
 
