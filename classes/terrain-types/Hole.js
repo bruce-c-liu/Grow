@@ -18,7 +18,7 @@ export class Hole {
       }
       if (player.y >= this.y) {
         // PLAYER DIED
-        player.reset();
+        player.die();
       }
     }
 

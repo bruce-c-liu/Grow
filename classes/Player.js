@@ -1,9 +1,11 @@
 const jumpSFX = new Audio('assets/sounds/jump2.wav');
 
 export class Player {
-  constructor(ctx, terrainScrollSpeed, gameSpeed) {
+  constructor(ctx, gameManager, terrainScrollSpeed, gameSpeed) {
     this.ctx = ctx;
     this.canvas = ctx.canvas;
+    this.GAME = gameManager;
+
     this.height = 30;
     this.width = 30;
     this.x = ctx.canvas.width / 2;
@@ -16,11 +18,13 @@ export class Player {
     this.Y_SPEED_MAX = 950; // max ySpeed. (limit this to prevent falling through platforms)
     this.gravity = 2500;
     this.maxJumps = 2;
+    this.startingLives = 3;
 
-    // player lifetime stats
+    // player lifetime stats (obtained from LocalStorage)
     this.exp = 0;
 
     // book-keeping variables
+    this.curLives = this.startingLives;
     this.xSpeed = -this.terrainScrollSpeed;
     this.ySpeed = 0;
     this.curJumps = 0; // keeps track of current number of jumps in the air. Limited by this.maxJumps
@@ -33,7 +37,7 @@ export class Player {
   update(secondsElapsed) {
     // player exited left frame
     if (this.x + this.width < 0) {
-      this.reset();
+      this.die();
     }
 
     if (this.state === 'JUMPING' || this.state === 'FALLING') {
@@ -146,8 +150,14 @@ export class Player {
     this.isDucking = false;
   }
 
-  reset() {
-    this.x = this.canvas.width / 2 + 100;
+  die() {
+    this.curLives--;
+
+    if (this.curLives === 0) {
+      this.GAME.gameOver();
+      this.curLives = this.startingLives;
+    }
+    this.x = this.canvas.width / 2 + 200;
     this.y = 0;
     // this.xSpeed = 0;
     this.ySpeed = 0;

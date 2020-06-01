@@ -37,7 +37,7 @@ export class Lava {
       }
       // PLAYER FELL INTO LAVA
       if (playerBottomY >= this.y + 20) {
-        player.reset();
+        player.die();
       }
     }
   }

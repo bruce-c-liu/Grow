@@ -7,6 +7,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  font-family: 'Orbitron', sans-serif;
 }
 
 .container {
@@ -19,11 +20,47 @@ canvas {
   border: 1px solid white;
 }
 
-#menu {
-  color: white;
+.ui {
+  color: black;
   position: absolute;
   width: 1200px;
   height: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu {
+  display: none;
+}
+
+.game-over {
+  display: none;
+  position: relative;
+  text-align: center;
+  border-radius: 15px;
+  width: 50%;
+  height: 50%;
+  padding: 25px;
+  background-color: rgba(79, 75, 66, 0.852);
+}
+
+.title {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 25px;
+  letter-spacing: 20px;
+}
+
+.body {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.continue {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  bottom: 0px;
 }
 
 .instructions {
