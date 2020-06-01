@@ -4,6 +4,9 @@
 
 body {
   background-color: black;
+}
+
+.container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,4 +21,10 @@ canvas {
   position: absolute;
   width: 1200px;
   height: 600px;
+}
+
+.instructions {
+  margin-top: 5px;
+  color: white;
+  text-align: center;
 }
