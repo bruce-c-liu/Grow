@@ -1,24 +1,26 @@
 const jumpSFX = new Audio('assets/sounds/jump2.wav');
 
 export class Player {
-  constructor(ctx, canvas, terrainScrollSpeed, gameSpeed) {
+  constructor(ctx, terrainScrollSpeed, gameSpeed) {
     this.ctx = ctx;
-    this.canvas = canvas;
+    this.canvas = ctx.canvas;
     this.height = 30;
     this.width = 30;
-    this.x = canvas.width / 2;
+    this.x = ctx.canvas.width / 2;
     this.y = 0;
-    this.TERRAIN_SCROLL_SPEED = terrainScrollSpeed;
-    this.BODY_COLOR = 'rgb(3, 214, 144)';
-    this.EYE_COLOR = 'black';
-    this.STRAFE_SPEED = 100 * gameSpeed; // speed of moving left/right
-    this.JUMP_SPEED = -900; // initial speed of player jumping up
-    this.GRAVITY = 3000;
+    this.terrainScrollSpeed = terrainScrollSpeed;
+    this.bodyColor = 'rgb(3, 214, 144)';
+    this.eyeColor = 'black';
+    this.strafeSpeed = 100 * gameSpeed; // speed of moving left/right
+    this.jumpSpeed = -900; // initial speed of player jumping up
+    this.Y_SPEED_MAX = 950; // max ySpeed. (limit this to prevent falling through platforms)
+    this.gravity = 2500;
+    this.maxJumps = 2;
 
     // book-keeping variables
-    this.xSpeed = -this.TERRAIN_SCROLL_SPEED;
+    this.xSpeed = -this.terrainScrollSpeed;
     this.ySpeed = 0;
-    this.Y_SPEED_MAX = 950; // max ySpeed. (limit this to prevent falling through platforms)
+    this.curJumps = 0; // keeps track of current number of jumps in the air. Limited by this.maxJumps
     this.state = 'FALLING'; // [IDLE, JUMPING, FALLING]
     this.isDucking = false;
     this.isMovingLeft = false;
@@ -34,9 +36,9 @@ export class Player {
     if (this.state === 'JUMPING' || this.state === 'FALLING') {
       // https://gamedev.stackexchange.com/questions/15708/how-can-i-implement-gravity/41917#41917
       // Verlot method. Apparently it's better than Euler's method.
-      this.y += secondsElapsed * (this.ySpeed + (secondsElapsed * this.GRAVITY) / 2);
+      this.y += secondsElapsed * (this.ySpeed + (secondsElapsed * this.gravity) / 2);
       if (this.ySpeed < this.Y_SPEED_MAX) {
-        this.ySpeed += secondsElapsed * this.GRAVITY;
+        this.ySpeed += secondsElapsed * this.gravity;
       }
 
       if (this.ySpeed > 0) {
@@ -51,7 +53,7 @@ export class Player {
     if (this.isDucking) {
       //body
       this.ctx.beginPath();
-      this.ctx.fillStyle = this.BODY_COLOR;
+      this.ctx.fillStyle = this.bodyColor;
       this.ctx.ellipse(
         this.x + this.width / 2,
         this.y + this.height / 2 + 10,
@@ -65,17 +67,17 @@ export class Player {
       this.ctx.fill();
 
       //eye
-      this.ctx.fillStyle = this.EYE_COLOR;
+      this.ctx.fillStyle = this.eyeColor;
       this.ctx.beginPath();
       this.ctx.ellipse(this.x + this.width, this.y + 23, 6, 2, 0, -0.9 * Math.PI, 0.9 * Math.PI);
       this.ctx.fill();
     } else {
       //body
-      this.ctx.fillStyle = this.BODY_COLOR;
+      this.ctx.fillStyle = this.bodyColor;
       this.ctx.fillRect(this.x, this.y, this.width, this.height);
 
       //eye
-      this.ctx.fillStyle = this.EYE_COLOR;
+      this.ctx.fillStyle = this.eyeColor;
       this.ctx.beginPath();
       this.ctx.ellipse(this.x + this.width - 7, this.y + 12, 3, 6, 0, -0.9 * Math.PI, 0.9 * Math.PI);
       this.ctx.fill();
@@ -92,35 +94,39 @@ export class Player {
   strafe(direction) {
     if (direction === 'left') {
       this.isMovingLeft = true;
-      this.xSpeed = -this.STRAFE_SPEED - this.TERRAIN_SCROLL_SPEED;
+      this.xSpeed = -this.strafeSpeed - this.terrainScrollSpeed;
     } else if (direction === 'right') {
       this.isMovingRight = true;
-      this.xSpeed = this.STRAFE_SPEED;
+      this.xSpeed = this.strafeSpeed;
     }
   }
 
   endStrafe(direction) {
     if (direction === 'left') {
       this.isMovingLeft = false;
-      this.xSpeed = this.isMovingRight ? this.STRAFE_SPEED : -this.TERRAIN_SCROLL_SPEED;
+      this.xSpeed = this.isMovingRight ? this.strafeSpeed : -this.terrainScrollSpeed;
     } else if (direction === 'right') {
       this.isMovingRight = false;
       this.xSpeed = this.isMovingLeft
-        ? -this.STRAFE_SPEED - this.TERRAIN_SCROLL_SPEED
-        : -this.TERRAIN_SCROLL_SPEED;
+        ? -this.strafeSpeed - this.terrainScrollSpeed
+        : -this.terrainScrollSpeed;
     }
   }
 
   jump() {
-    this.state = 'JUMPING';
-    this.ySpeed = this.JUMP_SPEED;
-    if (!jumpSFX.paused) {
-      jumpSFX.load();
+    if (this.curJumps < this.maxJumps) {
+      this.curJumps++;
+      this.state = 'JUMPING';
+      this.ySpeed = this.jumpSpeed;
+      if (!jumpSFX.paused) {
+        jumpSFX.load();
+      }
+      jumpSFX.play();
     }
-    jumpSFX.play();
   }
 
   land(yPosition) {
+    this.curJumps = 0;
     this.y = yPosition;
     this.state = 'IDLE';
     this.ySpeed = 0;
@@ -140,5 +146,6 @@ export class Player {
     // this.xSpeed = 0;
     this.ySpeed = 0;
     this.state = 'FALLING';
+    this.curJumps = 0;
   }
 }

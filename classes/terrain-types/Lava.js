@@ -1,14 +1,13 @@
 export class Lava {
-  constructor(ctx, canvas) {
+  constructor(ctx) {
     this.ctx = ctx;
-    this.canvas = canvas;
+    this.canvas = ctx.canvas;
 
-    this.width = canvas.width;
+    this.width = ctx.canvas.width;
     this.height = 10;
     this.x = 0;
-    this.y = canvas.height - this.height;
-
-    this.COLOR = 'red';
+    this.y = ctx.canvas.height - this.height;
+    this.color = 'red';
   }
 
   update(secondsElapsed, checkPlayerCollision = false, player) {
@@ -25,9 +24,7 @@ export class Lava {
     }
   }
   draw() {
-    // it's a hole. don't need to draw.
-    // TODO: remove drawing. or maybe not? Could be lava.
-    this.ctx.fillStyle = 'red';
+    this.ctx.fillStyle = this.color;
     this.ctx.fillRect(this.x, this.y, this.width, this.height);
   }
 }

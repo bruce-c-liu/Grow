@@ -1,13 +1,13 @@
 export class Platform {
-  constructor(ctx, canvas, x, y, width) {
+  constructor(ctx, x, y, width) {
     this.ctx = ctx;
-    this.canvas = canvas;
+    this.canvas = ctx.canvas;
 
     this.x = x;
     this.y = y;
     this.width = width;
     this.height = 20;
-    this.COLOR = 'white';
+    this.color = 'white';
   }
 
   update(secondsElapsed, checkPlayerCollision = false, player, terrainScrollSpeed) {
@@ -27,7 +27,7 @@ export class Platform {
   }
 
   draw() {
-    this.ctx.fillStyle = this.COLOR;
+    this.ctx.fillStyle = this.color;
     this.ctx.fillRect(this.x, this.y, this.width, this.height);
   }
 

@@ -11,8 +11,8 @@ window.onload = (function () {
   // ========================================================================================================================
   const GAME_SPEED = 1;
   const TERRAIN_SCROLL_SPEED = 400 * GAME_SPEED;
-  const PLAYER = new Player(ctx, canvas, TERRAIN_SCROLL_SPEED, GAME_SPEED);
-  const TERRAIN_MANAGER = new TerrainManager(ctx, canvas, PLAYER, TERRAIN_SCROLL_SPEED);
+  const PLAYER = new Player(ctx, TERRAIN_SCROLL_SPEED, GAME_SPEED);
+  const TERRAIN_MANAGER = new TerrainManager(ctx, PLAYER, TERRAIN_SCROLL_SPEED);
 
   // ========================================================================================================================
   // Attach Event Handlers
