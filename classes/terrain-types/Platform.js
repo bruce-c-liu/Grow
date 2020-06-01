@@ -1,11 +1,11 @@
 export class Platform {
-  constructor(ctx, canvas, x, y, type) {
+  constructor(ctx, canvas, x, y, width) {
     this.ctx = ctx;
     this.canvas = canvas;
 
     this.x = x;
     this.y = y;
-    this.width = 300;
+    this.width = width;
     this.height = 20;
     this.COLOR = 'white';
   }

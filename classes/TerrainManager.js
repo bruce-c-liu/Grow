@@ -1,19 +1,17 @@
 import { Platform } from './terrain-types/Platform.js';
-import { Hole } from './terrain-types/Hole.js';
 import { Lava } from './terrain-types/Lava.js';
+import { randomBetween } from '../utils.js';
 
 export class TerrainManager {
   constructor(ctx, canvas, player, terrainScrollSpeed) {
     this.PLAYER = player;
     this.terrainScrollSpeed = terrainScrollSpeed;
-    this.terrains = [
-      new Platform(ctx, canvas, 0, canvas.height - 10),
-      new Platform(ctx, canvas, 300, canvas.height - 230),
-      new Lava(ctx, canvas)
-    ];
+    this.terrains = [new Platform(ctx, canvas, 0, canvas.height / 2, 1500), new Lava(ctx, canvas)];
 
-    for (let x = 900; x < 20000; x += 300) {
-      this.terrains.push(new Platform(ctx, canvas, x, Math.random() * canvas.height));
+    for (let x = 1800; x < 20000; x += 300) {
+      this.terrains.push(
+        new Platform(ctx, canvas, x, randomBetween(40, canvas.height - 30), randomBetween(100, 200))
+      );
     }
   }
 

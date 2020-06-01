@@ -7,7 +7,7 @@ export class Player {
     this.height = 30;
     this.width = 30;
     this.x = canvas.width / 2;
-    this.y = canvas.height / 2;
+    this.y = 0;
     this.TERRAIN_SCROLL_SPEED = terrainScrollSpeed;
     this.BODY_COLOR = 'rgb(3, 214, 144)';
     this.EYE_COLOR = 'black';

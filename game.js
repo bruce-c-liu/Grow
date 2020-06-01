@@ -10,9 +10,7 @@ window.onload = (function () {
   // Game Variables
   // ========================================================================================================================
   const GAME_SPEED = 1;
-  const MAX_WIDTH = canvas.width;
-  const MAX_HEIGHT = canvas.height;
-  const TERRAIN_SCROLL_SPEED = 500 * GAME_SPEED;
+  const TERRAIN_SCROLL_SPEED = 400 * GAME_SPEED;
   const PLAYER = new Player(ctx, canvas, TERRAIN_SCROLL_SPEED, GAME_SPEED);
   const TERRAIN_MANAGER = new TerrainManager(ctx, canvas, PLAYER, TERRAIN_SCROLL_SPEED);
 
