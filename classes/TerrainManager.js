@@ -10,7 +10,7 @@ export class TerrainManager {
     this.terrainScrollSpeed = terrainScrollSpeed;
     this.terrains = [new Lava(ctx), new Platform(ctx, 0, ctx.canvas.height / 2, 1500)];
 
-    for (let x = 1800; x < 20000; x += 250) {
+    for (let x = 1800; x < 25000; x += 250) {
       this.terrains.push(
         new Platform(ctx, x, randomIntBetween(120, ctx.canvas.height - 35), randomIntBetween(25, 100))
       );

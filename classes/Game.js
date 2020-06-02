@@ -11,10 +11,13 @@ export class Game {
     this.terrainScrollSpeed = 400 * this.gameSpeed;
     this.player = new Player(ctx, this, this.terrainScrollSpeed, this.gameSpeed);
     this.terrainManager = new TerrainManager(ctx, this.player, this.terrainScrollSpeed);
-    this.userInterface = new UserInterface(ctx, this.player);
+    this.userInterface = new UserInterface(ctx, this.player, this.terrainScrollSpeed);
 
     this.timeOfLastUpdate = window.performance.now();
-    this.state = 'PLAYING'; // [PLAYING, GAME OVER, STATS]
+    this.state = 'PLAYING'; // [PLAYING, PAUSED, GAME OVER, STATS]
+
+    // Menus and other screens
+    this.gameOverScreen = document.getElementsByClassName('game-over')[0];
 
     // ========================================================================================================================
     // Attach Event Handlers
@@ -34,9 +37,12 @@ export class Game {
           case 's':
             this.player.duck();
             break;
+          case 'p':
+            this.togglePause();
+            break;
           case ' ':
-            if (this.state === 'GAME OVER') this.newGame();
-            this.player.break;
+            this.newGame();
+            break;
         }
       }
     });
@@ -57,16 +63,25 @@ export class Game {
     // ========================================================================================================================
   }
 
+  togglePause() {
+    if (this.state === 'PLAYING') {
+      this.state = 'PAUSED';
+    } else if (this.state === 'PAUSED') {
+      this.state = 'PLAYING';
+    }
+  }
+
   gameOver() {
     this.state = 'GAME OVER';
-    const element = document.getElementsByClassName('game-over')[0];
-    element.style.display = 'initial';
+    document.getElementById('distance-travelled').textContent = this.player.distanceTravelled;
+    this.gameOverScreen.style.display = 'initial';
   }
 
   newGame() {
-    this.state = 'PLAYING';
-    const element = document.getElementsByClassName('game-over')[0];
-    element.style.display = 'none';
+    if (this.state === 'GAME OVER') {
+      this.state = 'PLAYING';
+      this.gameOverScreen.style.display = 'none';
+    }
   }
 
   updateAndDraw(timeOfUpdate) {
@@ -80,6 +95,11 @@ export class Game {
         this.player.update(secondsElapsed);
         this.terrainManager.update(secondsElapsed);
         this.userInterface.update(secondsElapsed);
+        this.player.draw();
+        this.terrainManager.draw();
+        this.userInterface.draw();
+        break;
+      case 'PAUSED':
         this.player.draw();
         this.terrainManager.draw();
         this.userInterface.draw();

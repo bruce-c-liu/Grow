@@ -32,6 +32,7 @@ export class Player {
     this.isDucking = false;
     this.isMovingLeft = false;
     this.isMovingRight = false;
+    this.distanceTravelled = 0;
   }
 
   update(secondsElapsed) {
@@ -53,6 +54,7 @@ export class Player {
       }
     }
 
+    this.distanceTravelled += Math.floor(this.terrainScrollSpeed * secondsElapsed);
     this.x += this.xSpeed * secondsElapsed;
   }
 
@@ -156,6 +158,7 @@ export class Player {
     if (this.curLives === 0) {
       this.GAME.gameOver();
       this.curLives = this.startingLives;
+      this.distanceTravelled = 0;
     }
     this.x = this.canvas.width / 2 + 200;
     this.y = 0;

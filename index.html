@@ -4,7 +4,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles.css?v=1" />
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
     <link rel="icon" href="data:," />
     <title>Grow</title>
   </head>
@@ -22,14 +25,15 @@
         <div class="menu">Menu</div>
         <div class="game-over">
           <p class="title">YOU DIED</p>
-          <p class="body">Distance Travelled: 23019 pixels</p>
+          <p class="body">Distance Travelled: <span id="distance-travelled"></span> pixels</p>
           <p class="body">EXP Earned: 500</p>
           <p class="body">Level Up in 125 EXP</p>
           <p class="continue">- Press Space to continue -</p>
         </div>
       </div>
     </div>
-    <div class="instructions">Controls: W, A, S, D</div>
+    <div class="instructions">Movement: W, A, S, D</div>
+    <div class="instructions">Pause: P</div>
     <script type="module" src="index.js"></script>
   </body>
 </html>

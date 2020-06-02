@@ -14,8 +14,9 @@ Ideas and suggestions are welcome by opening issues. :)
 
 #### NEW
 
-- Added Game Over screen. Values are placeholders.
-- Added UI placeholder.
+- Added Game Over screen.
+- Added Pause function. Just press P during a run.
+- Added UI header that shows distance travelled!
 - Added jump "tail" to indicate how many jumps have occurred in midair.
 
 #### BALANCE
