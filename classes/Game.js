@@ -7,11 +7,13 @@ export class Game {
     this.ctx = ctx;
     this.canvas = ctx.canvas;
 
+    ctx.font = '20px Orbitron';
+
     this.gameSpeed = 1;
     this.terrainScrollSpeed = 400 * this.gameSpeed;
     this.player = new Player(ctx, this, this.terrainScrollSpeed, this.gameSpeed);
     this.terrainManager = new TerrainManager(ctx, this.player, this.terrainScrollSpeed);
-    this.userInterface = new UserInterface(ctx, this.player, this.terrainScrollSpeed);
+    this.userInterface = new UserInterface(ctx, this.player);
 
     this.timeOfLastUpdate = window.performance.now();
     this.state = 'PLAYING'; // [PLAYING, PAUSED, GAME OVER, STATS]

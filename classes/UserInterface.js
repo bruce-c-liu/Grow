@@ -1,5 +1,5 @@
 export class UserInterface {
-  constructor(ctx, player, terrainScrollSpeed) {
+  constructor(ctx, player) {
     this.ctx = ctx;
     this.canvas = ctx.canvas;
     this.player = player;
@@ -20,9 +20,13 @@ export class UserInterface {
     switch (this.state) {
       case 'PLAYING':
         this.ctx.fillStyle = 'white';
-        this.ctx.fillRect(0, 0, this.canvas.width, 12);
+        this.ctx.fillRect(0, 0, this.canvas.width, 22);
         this.ctx.fillStyle = 'black';
-        this.ctx.fillText(`Distance Travelled ${this.player.distanceTravelled}`, this.canvas.width / 2 - 25, 10);
+        this.ctx.fillText(
+          `Distance Travelled: ${this.player.distanceTravelled}`,
+          this.canvas.width / 2 - 135,
+          18
+        );
         break;
       case 'GAME OVER':
         break;
