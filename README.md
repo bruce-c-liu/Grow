@@ -17,11 +17,16 @@ Ideas and suggestions are welcome by opening issues. :)
 - Added Pause indicator on pause.
 - Allow buffering of ducking and strafing during pause.
 
-###### BALANCE
-
 ###### CHANGED
 
 - Improved Game Over screen contrast.
+
+###### UNDER THE HOOD
+
+- Changed terrain storage from array to Circular Doubly LinkedList
+  - Greatly speeds up deletion operation. O(n) -> O(1)
+- Terrains are now deallocated when offscreen.
+  - Significant reduction in memory usage.
 
 ---
 
@@ -33,14 +38,12 @@ Ideas and suggestions are welcome by opening issues. :)
 - Added Pause function. Just press P during a run.
 - Added UI header that shows distance travelled!
 - Added jump "tail" to indicate how many jumps have occurred in midair.
-
-###### BALANCE
-
-- Platforms are now much narrower.
+- Game Over screen shows after all lives are spent.
 
 ###### CHANGED
 
-- Max lives changed from unlimited to 3. Game Over screen shows after all lives are spent.
+- Platforms are now much narrower.
+- Max lives changed from unlimited to 3.
 - Lava is now animated!
 - Midair max jumps from unlimited to 2.
 - Platforms now have dynamic width.
