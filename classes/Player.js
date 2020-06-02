@@ -4,7 +4,7 @@ export class Player {
   constructor(ctx, gameManager, terrainScrollSpeed, gameSpeed) {
     this.ctx = ctx;
     this.canvas = ctx.canvas;
-    this.GAME = gameManager;
+    this.game = gameManager;
 
     this.height = 30;
     this.width = 30;
@@ -36,29 +36,51 @@ export class Player {
   }
 
   update(secondsElapsed) {
-    // player exited left frame
-    if (this.x + this.width < 0) {
-      this.die();
+    switch (this.game.state) {
+      case 'PLAYING':
+        // player exited left frame
+        if (this.x + this.width < 0) {
+          this.die();
+        }
+
+        if (this.state === 'JUMPING' || this.state === 'FALLING') {
+          // https://gamedev.stackexchange.com/questions/15708/how-can-i-implement-gravity/41917#41917
+          // Verlot method. Apparently it's better than Euler's method.
+          this.y += secondsElapsed * (this.ySpeed + (secondsElapsed * this.gravity) / 2);
+          if (this.ySpeed < this.Y_SPEED_MAX) {
+            this.ySpeed += secondsElapsed * this.gravity;
+          }
+
+          if (this.ySpeed > 0) {
+            this.state = 'FALLING';
+          }
+        }
+
+        this.distanceTravelled += Math.floor(this.terrainScrollSpeed * secondsElapsed);
+        this.x += this.xSpeed * secondsElapsed;
+        break;
+      case 'PAUSED':
+      case 'GAME OVER':
+        break;
+      case 'STATS':
+        break;
     }
-
-    if (this.state === 'JUMPING' || this.state === 'FALLING') {
-      // https://gamedev.stackexchange.com/questions/15708/how-can-i-implement-gravity/41917#41917
-      // Verlot method. Apparently it's better than Euler's method.
-      this.y += secondsElapsed * (this.ySpeed + (secondsElapsed * this.gravity) / 2);
-      if (this.ySpeed < this.Y_SPEED_MAX) {
-        this.ySpeed += secondsElapsed * this.gravity;
-      }
-
-      if (this.ySpeed > 0) {
-        this.state = 'FALLING';
-      }
-    }
-
-    this.distanceTravelled += Math.floor(this.terrainScrollSpeed * secondsElapsed);
-    this.x += this.xSpeed * secondsElapsed;
   }
 
   draw() {
+    switch (this.game.state) {
+      case 'PLAYING':
+      case 'PAUSED':
+        this._draw();
+        break;
+      case 'GAME OVER':
+        break;
+      case 'STATS':
+        break;
+    }
+  }
+
+  _draw() {
     if (this.isDucking) {
       //body
       this.ctx.beginPath();
@@ -144,27 +166,32 @@ export class Player {
     this.ySpeed = 0;
   }
 
-  duck() {
-    this.isDucking = true;
+  setIsDucking(isDucking) {
+    this.isDucking = isDucking;
   }
 
-  endDuck() {
-    this.isDucking = false;
-  }
-
-  die() {
-    this.curLives--;
-
-    if (this.curLives === 0) {
-      this.GAME.gameOver();
-      this.curLives = this.startingLives;
-      this.distanceTravelled = 0;
-    }
+  respawn() {
     this.x = this.canvas.width / 2 + 200;
     this.y = 0;
     // this.xSpeed = 0;
     this.ySpeed = 0;
     this.state = 'FALLING';
     this.curJumps = 0;
+  }
+
+  die() {
+    this.curLives--;
+
+    if (this.curLives === 0) {
+      this.game.gameOver();
+    } else {
+      this.respawn();
+    }
+  }
+
+  reset() {
+    this.curLives = this.startingLives;
+    this.distanceTravelled = 0;
+    this.respawn();
   }
 }

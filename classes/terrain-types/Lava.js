@@ -16,6 +16,7 @@ export class Lava {
     this.y = ctx.canvas.height - this.height;
     this.color = 'red';
 
+    // construct this.chunks
     for (let x = 0; x <= ctx.canvas.width - this.CHUNK_WIDTH; x += this.CHUNK_WIDTH) {
       this.chunks.push({
         x: x,
@@ -44,7 +45,10 @@ export class Lava {
   draw() {
     this.ctx.fillStyle = this.color;
     for (let chunk of this.chunks) {
-      if (chunk.y <= this.canvas.height - this.MAX_CHUNK_HEIGHT || chunk.y >= this.canvas.height - this.MIN_CHUNK_HEIGHT) {
+      if (
+        chunk.y <= this.canvas.height - this.MAX_CHUNK_HEIGHT ||
+        chunk.y >= this.canvas.height - this.MIN_CHUNK_HEIGHT
+      ) {
         chunk.dy = -chunk.dy;
       }
 

@@ -12,39 +12,46 @@ export class Game {
     this.gameSpeed = 1;
     this.terrainScrollSpeed = 400 * this.gameSpeed;
     this.player = new Player(ctx, this, this.terrainScrollSpeed, this.gameSpeed);
-    this.terrainManager = new TerrainManager(ctx, this.player, this.terrainScrollSpeed);
-    this.userInterface = new UserInterface(ctx, this.player);
+    this.terrainManager = new TerrainManager(ctx, this, this.player, this.terrainScrollSpeed);
+    this.userInterface = new UserInterface(ctx, this, this.player);
 
     this.timeOfLastUpdate = window.performance.now();
     this.state = 'PLAYING'; // [PLAYING, PAUSED, GAME OVER, STATS]
 
-    // Menus and other screens
-    this.gameOverScreen = document.getElementsByClassName('game-over')[0];
-
     // ========================================================================================================================
     // Attach Event Handlers
     // ========================================================================================================================
-    document.addEventListener('keydown', (e) => {
-      if (!e.repeat) {
-        switch (e.key) {
-          case 'w':
-            this.player.jump();
-            break;
-          case 'a':
-            this.player.strafe('left');
-            break;
-          case 'd':
-            this.player.strafe('right');
-            break;
-          case 's':
-            this.player.duck();
-            break;
-          case 'p':
-            this.togglePause();
-            break;
-          case ' ':
-            this.newGame();
-            break;
+    document.addEventListener('keydown', ({ repeat, key }) => {
+      if (!repeat) {
+        // only allow jumping when PLAYING
+        if (this.state === 'PLAYING') {
+          switch (key) {
+            case 'w':
+              this.player.jump();
+              break;
+          }
+        }
+
+        // allow buffering of strafe/ducking when PAUSED
+        if (this.state === 'PLAYING' || this.state === 'PAUSED') {
+          switch (key) {
+            case 'a':
+              this.player.strafe('left');
+              break;
+            case 'd':
+              this.player.strafe('right');
+              break;
+            case 's':
+              this.player.setIsDucking(true);
+              break;
+            case 'p':
+              this.togglePause();
+              break;
+          }
+        }
+
+        if (this.state === 'GAME OVER' && key === ' ') {
+          this.newGame();
         }
       }
     });
@@ -58,7 +65,7 @@ export class Game {
           this.player.endStrafe('right');
           break;
         case 's':
-          this.player.endDuck();
+          this.player.setIsDucking(false);
           break;
       }
     });
@@ -66,24 +73,16 @@ export class Game {
   }
 
   togglePause() {
-    if (this.state === 'PLAYING') {
-      this.state = 'PAUSED';
-    } else if (this.state === 'PAUSED') {
-      this.state = 'PLAYING';
-    }
+    this.state = this.state === 'PAUSED' ? 'PLAYING' : 'PAUSED';
   }
 
   gameOver() {
     this.state = 'GAME OVER';
-    document.getElementById('distance-travelled').textContent = this.player.distanceTravelled;
-    this.gameOverScreen.style.display = 'initial';
   }
 
   newGame() {
-    if (this.state === 'GAME OVER') {
-      this.state = 'PLAYING';
-      this.gameOverScreen.style.display = 'none';
-    }
+    this.state = 'PLAYING';
+    this.player.reset();
   }
 
   updateAndDraw(timeOfUpdate) {
@@ -92,27 +91,12 @@ export class Game {
 
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    switch (this.state) {
-      case 'PLAYING':
-        this.player.update(secondsElapsed);
-        this.terrainManager.update(secondsElapsed);
-        this.userInterface.update(secondsElapsed);
-        this.player.draw();
-        this.terrainManager.draw();
-        this.userInterface.draw();
-        break;
-      case 'PAUSED':
-        this.player.draw();
-        this.terrainManager.draw();
-        this.userInterface.draw();
-        break;
-      case 'GAME OVER':
-        this.terrainManager.update(secondsElapsed);
-        this.terrainManager.draw();
-        break;
-      case 'STATS':
-        break;
-    }
+    this.player.update(secondsElapsed);
+    this.terrainManager.update(secondsElapsed);
+    this.userInterface.update(secondsElapsed);
+    this.player.draw();
+    this.terrainManager.draw();
+    this.userInterface.draw();
 
     requestAnimationFrame(this.updateAndDraw.bind(this));
   }
