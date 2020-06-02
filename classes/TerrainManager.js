@@ -9,11 +9,23 @@ export class TerrainManager {
     this.game = game;
     this.player = player;
     this.terrainScrollSpeed = terrainScrollSpeed;
-    this.rightMostBlock = new Block(ctx, 0, ctx.canvas.height / 2, 1200); // tracked so we know when to generate new terrain/blocks
+    // this.rightMostBlock = new Block(ctx, 0, ctx.canvas.height / 2, 1200); // tracked so we know when to generate new terrain/blocks
+    // this.terrains = new Queue();
+
+    // this.terrains.enqueue(new Lava(ctx));
+    // this.terrains.enqueue(this.rightMostBlock);
+
+    // TODO: Delete everything below this. Uncomment above.
+    this.rightMostBlock = new Block(ctx, 0, ctx.canvas.height / 2 + 250, 1200); // tracked so we know when to generate new terrain/blocks
     this.terrains = new Queue();
 
     this.terrains.enqueue(new Lava(ctx));
     this.terrains.enqueue(this.rightMostBlock);
+    this.terrains.enqueue(new Block(ctx, ctx.canvas.width/2, ctx.canvas.height / 2 + 230, 200, 20));
+    this.terrains.enqueue(new Block(ctx, ctx.canvas.width/2, ctx.canvas.height / 2 + 10, 200, 150));
+    this.terrains.enqueue(new Block(ctx, ctx.canvas.width/2-400, ctx.canvas.height / 2 + 160, 200, 20));
+    this.terrains.enqueue(new Block(ctx, ctx.canvas.width/2-400, ctx.canvas.height / 2 + 200, 200, 120));
+    this.terrains.enqueue(new Block(ctx, ctx.canvas.width / 2, ctx.canvas.height / 2 - 200, 10, 20));
   }
 
   update(secondsElapsed) {
@@ -28,16 +40,16 @@ export class TerrainManager {
             // dequeue terrain that have travelled offscreen
             this.terrains.remove(node);
           } else if (
-            // check collision only if player is within horizontal distance of terrain
-            (terrain.x <= this.player.x && this.player.x <= terrain.x + terrain.width) ||
-            (terrain.x <= this.player.x + this.player.width &&
-              this.player.x + this.player.width <= terrain.x + terrain.width)
+            this.player.x > terrain.x + terrain.width ||
+            this.player.x + this.player.width < terrain.x
           ) {
-            terrain.update(secondsElapsed, true, this.player, this.terrainScrollSpeed);
-          } else {
+            // skip collision-check since player isn't within horizontal range of terrain
             terrain.update(secondsElapsed, false, null, this.terrainScrollSpeed);
+          } else {
+            terrain.update(secondsElapsed, true, this.player, this.terrainScrollSpeed);
           }
         }
+
         // generate new terrain
         if (this.rightMostBlock.x + this.rightMostBlock.width <= this.canvas.width - 250) {
           this.rightMostBlock = new Block(

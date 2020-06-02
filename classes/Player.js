@@ -13,9 +13,9 @@ export class Player {
     this.terrainScrollSpeed = terrainScrollSpeed;
     this.bodyColor = 'rgb(3, 214, 144)';
     this.eyeColor = 'black';
-    this.strafeSpeed = 100 * gameSpeed; // speed of moving left/right
+    this.strafeSpeed = 150 * gameSpeed; // speed of moving left/right
     this.jumpSpeed = -900; // initial speed of player jumping up
-    this.Y_SPEED_MAX = 950; // max ySpeed. (limit this to prevent falling through blocks)
+    this.Y_SPEED_MAX = 900; // max ySpeed. (limit this to prevent falling through blocks)
     this.gravity = 2500;
     this.maxJumps = 2;
     this.startingLives = 3;
@@ -58,6 +58,7 @@ export class Player {
 
         this.distanceTravelled += Math.floor(this.terrainScrollSpeed * secondsElapsed);
         this.x += this.xSpeed * secondsElapsed;
+
         break;
       case 'PAUSED':
       case 'GAME OVER':

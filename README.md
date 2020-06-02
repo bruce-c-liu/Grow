@@ -16,6 +16,10 @@ Ideas and suggestions are welcome by opening issues. :)
 
 - Added Pause indicator on pause.
 - Allow buffering of ducking and strafing during pause.
+- Blocks are now completely solid!
+  - Player can not jump through block from bottom or sides.
+- Added wall grabbing/sliding!
+  - Jumps are reset while on wall. 
 
 ###### CHANGED
 
@@ -23,13 +27,17 @@ Ideas and suggestions are welcome by opening issues. :)
 
 ###### UNDER THE HOOD
 
-- Changed terrain storage from array to Circular Doubly LinkedList
+- Changed terrain storage from array to Circular Doubly LinkedList.
   - Greatly speeds up deletion operation. O(n) -> O(1)
 - Terrains are now deallocated when offscreen.
   - Significant reduction in memory usage.
-- Terrains are now created only when required! (Before, they were all created during initialization.)
+- Terrains are now created only when required!
   - Should speed up game initialization.
-  - Huge decrease in memory/processing during gameplay.
+  - Huge decrease in required memory/processing during gameplay.
+- Improved collision detection algorithm.
+  - Makes fewer unnecessary checks.
+
+###### BUG FIXES
 
 ---
 
