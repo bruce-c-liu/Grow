@@ -10,6 +10,18 @@ Ideas and suggestions are welcome by opening issues. :)
 
 ## Patch Notes
 
+###### 6/2/20
+
+#### NEW
+
+- Added Pause indicator on pause.
+
+#### BALANCE
+
+#### CHANGED
+
+- Improved Game Over screen contrast.
+
 ###### 6/1/20
 
 #### NEW
