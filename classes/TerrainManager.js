@@ -1,4 +1,4 @@
-import { Platform } from './terrain-types/Platform.js';
+import { Block } from './terrain-types/Block.js';
 import { Lava } from './terrain-types/Lava.js';
 import { randomIntBetween, Queue } from '../utils.js';
 
@@ -9,16 +9,11 @@ export class TerrainManager {
     this.game = game;
     this.player = player;
     this.terrainScrollSpeed = terrainScrollSpeed;
+    this.rightMostBlock = new Block(ctx, 0, ctx.canvas.height / 2, 1200); // tracked so we know when to generate new terrain/blocks
     this.terrains = new Queue();
 
     this.terrains.enqueue(new Lava(ctx));
-    this.terrains.enqueue(new Platform(ctx, 0, ctx.canvas.height / 2, 1500));
-
-    for (let x = 1800; x < 25000; x += 250) {
-      this.terrains.enqueue(
-        new Platform(ctx, x, randomIntBetween(120, ctx.canvas.height - 35), randomIntBetween(25, 100))
-      );
-    }
+    this.terrains.enqueue(this.rightMostBlock);
   }
 
   update(secondsElapsed) {
@@ -28,8 +23,9 @@ export class TerrainManager {
         // console.log(this.terrains.size);
         for (let node of this.terrains) {
           let { val: terrain } = node;
-          // dequeue terrain that have travelled offscreen
+
           if (terrain.x + terrain.width <= 0) {
+            // dequeue terrain that have travelled offscreen
             this.terrains.remove(node);
           } else if (
             // check collision only if player is within horizontal distance of terrain
@@ -41,6 +37,17 @@ export class TerrainManager {
           } else {
             terrain.update(secondsElapsed, false, null, this.terrainScrollSpeed);
           }
+        }
+        // generate new terrain
+        if (this.rightMostBlock.x + this.rightMostBlock.width <= this.canvas.width - 250) {
+          this.rightMostBlock = new Block(
+            this.ctx,
+            this.canvas.width,
+            randomIntBetween(140, this.canvas.height - 35),
+            randomIntBetween(25, 100)
+          );
+
+          this.terrains.enqueue(this.rightMostBlock);
         }
         break;
       case 'PAUSED':

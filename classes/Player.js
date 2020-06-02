@@ -15,7 +15,7 @@ export class Player {
     this.eyeColor = 'black';
     this.strafeSpeed = 100 * gameSpeed; // speed of moving left/right
     this.jumpSpeed = -900; // initial speed of player jumping up
-    this.Y_SPEED_MAX = 950; // max ySpeed. (limit this to prevent falling through platforms)
+    this.Y_SPEED_MAX = 950; // max ySpeed. (limit this to prevent falling through blocks)
     this.gravity = 2500;
     this.maxJumps = 2;
     this.startingLives = 3;

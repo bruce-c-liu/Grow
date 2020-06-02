@@ -1,4 +1,4 @@
-export class Platform {
+export class Block {
   constructor(ctx, x, y, width) {
     this.ctx = ctx;
     this.canvas = ctx.canvas;
@@ -14,7 +14,7 @@ export class Platform {
     if (checkPlayerCollision) {
       let playerBottomY = player.y + player.height;
 
-      // player above platform
+      // player is above block
       if (player.state === 'FALLING' && this.y <= playerBottomY && playerBottomY <= this.y + this.height) {
         player.land(this.y - player.height);
       }

@@ -27,6 +27,9 @@ Ideas and suggestions are welcome by opening issues. :)
   - Greatly speeds up deletion operation. O(n) -> O(1)
 - Terrains are now deallocated when offscreen.
   - Significant reduction in memory usage.
+- Terrains are now created only when required! (Before, they were all created during initialization.)
+  - Should speed up game initialization.
+  - Huge decrease in memory/processing during gameplay.
 
 ---
 
@@ -42,8 +45,8 @@ Ideas and suggestions are welcome by opening issues. :)
 
 ###### CHANGED
 
-- Platforms are now much narrower.
+- Blocks are now much narrower.
 - Max lives changed from unlimited to 3.
 - Lava is now animated!
 - Midair max jumps from unlimited to 2.
-- Platforms now have dynamic width.
+- Blocks now have dynamic width.
