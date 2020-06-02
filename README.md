@@ -15,6 +15,7 @@ Ideas and suggestions are welcome by opening issues. :)
 #### NEW
 
 - Added Pause indicator on pause.
+- Allow buffering of ducking and strafing during pause.
 
 #### BALANCE
 
