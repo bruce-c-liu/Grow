@@ -20,7 +20,7 @@ export class UserInterface {
         this.gameOverScreen.style.display = 'none';
         break;
       case 'GAME OVER':
-        document.getElementById('distance-travelled').textContent = this.player.distanceTravelled;
+        document.getElementById('distance-travelled').textContent = Math.floor(this.player.distanceTravelled);
         this.gameOverScreen.style.display = 'initial';
         break;
       case 'STATS':
@@ -38,7 +38,7 @@ export class UserInterface {
         this.ctx.fillRect(0, 0, this.canvas.width, 22);
         this.ctx.fillStyle = 'black';
         this.ctx.fillText(
-          `Distance Travelled: ${this.player.distanceTravelled}`,
+          `Distance Travelled: ${Math.floor(this.player.distanceTravelled)}`,
           this.canvas.width / 2 - 140,
           18
         );

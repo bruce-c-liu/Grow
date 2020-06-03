@@ -42,7 +42,7 @@ export class Block {
         // player grabs left wall
         player.ySpeed = 0;
         player.curJumps = 0;
-        player.x = this.x - player.width;
+        player.x = this.x - player.width + 1;
       } else if (playerRightX > this.x + this.width / 2 && isInVerticalZone) {
         // player grabs right wall
         player.ySpeed = 0;

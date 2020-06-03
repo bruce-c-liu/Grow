@@ -1,10 +1,10 @@
 const jumpSFX = new Audio('assets/sounds/jump2.wav');
 
 export class Player {
-  constructor(ctx, gameManager, terrainScrollSpeed, gameSpeed) {
+  constructor(ctx, game, terrainScrollSpeed, gameSpeed) {
     this.ctx = ctx;
     this.canvas = ctx.canvas;
-    this.game = gameManager;
+    this.game = game;
 
     this.height = 30;
     this.width = 30;
@@ -56,7 +56,7 @@ export class Player {
           }
         }
 
-        this.distanceTravelled += Math.floor(this.terrainScrollSpeed * secondsElapsed);
+        this.distanceTravelled += this.terrainScrollSpeed * secondsElapsed;
         this.x += this.xSpeed * secondsElapsed;
 
         break;
@@ -138,6 +138,17 @@ export class Player {
       this.xSpeed = this.isMovingLeft
         ? -this.strafeSpeed - this.terrainScrollSpeed
         : -this.terrainScrollSpeed;
+    }
+  }
+
+  dash() {
+    this.ySpeed = 0; // reset ySpeed to give player more reaction time after dashing
+    if (this.xSpeed < -this.terrainScrollSpeed) {
+      this.x -= 200;
+    } else if (this.xSpeed >= -this.terrainScrollSpeed) {
+      // NOTE: player is considered NOT moving horizontally when xSpeed == terrainScrollSpeed
+      // this means by default, player dashes to the right when not moving
+      this.x += 200;
     }
   }
 

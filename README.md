@@ -10,6 +10,28 @@ Ideas and suggestions are welcome by opening issues. :)
 
 ## Patch Notes
 
+##### 6/3/20
+
+###### NEW
+
+- Added dash mechanic!
+  - Press SPACE to dash.
+  - Player will dash horizontally in the direction that it is currently moving in.
+  - By default, dashing while standing dashes to the right.
+  - If player dashes into a block, you will wall grab whichever side you are closer to.
+    - It is also possible to completely dash through a block.
+
+###### CHANGED
+
+- Restart game key changed from SPACE to ENTER.
+
+###### BUG FIX
+
+- Player now properly loses speed when wall sliding on left side of blocks.
+- Distance Travelled info is now accurate.
+
+---
+
 ##### 6/2/20
 
 ###### NEW
@@ -19,7 +41,7 @@ Ideas and suggestions are welcome by opening issues. :)
 - Blocks are now completely solid!
   - Player can not jump through block from bottom or sides.
 - Added wall grabbing/sliding!
-  - Jumps are reset while on wall. 
+  - Jumps are reset while on wall.
 
 ###### CHANGED
 
@@ -39,8 +61,9 @@ Ideas and suggestions are welcome by opening issues. :)
   - Makes fewer unnecessary checks.
 
 ###### BUG FIX
+
 - Hitbox while ducking now properly aligns with player avatar.
-- Player no longer "clips" into the block when wall sliding.  
+- Player no longer "clips" into the block when wall sliding.
 
 ---
 
