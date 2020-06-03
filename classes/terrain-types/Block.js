@@ -14,6 +14,10 @@ export class Block {
   }
 
   update(secondsElapsed, checkPlayerCollision = false, player, terrainScrollSpeed) {
+    // update position FIRST, so when checking collision with player, we have the
+    // most up-to-date position
+    this.x -= terrainScrollSpeed * secondsElapsed;
+
     if (checkPlayerCollision) {
       const playerRightX = player.x + player.width;
       const playerBottomY = player.y + player.height;
@@ -46,9 +50,6 @@ export class Block {
         player.x = blockRightX;
       }
     }
-
-    // update position
-    this.x -= terrainScrollSpeed * secondsElapsed;
   }
 
   draw() {

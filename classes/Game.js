@@ -10,8 +10,8 @@ export class Game {
     ctx.font = '20px Orbitron';
 
     this.gameSpeed = 1;
-    this.terrainScrollSpeed = 400 * this.gameSpeed;
-    // this.terrainScrollSpeed = 0 * this.gameSpeed;
+    // this.terrainScrollSpeed = 400 * this.gameSpeed;
+    this.terrainScrollSpeed = 100 * this.gameSpeed;
     this.player = new Player(ctx, this, this.terrainScrollSpeed, this.gameSpeed);
     this.terrainManager = new TerrainManager(ctx, this, this.player, this.terrainScrollSpeed);
     this.userInterface = new UserInterface(ctx, this, this.player);

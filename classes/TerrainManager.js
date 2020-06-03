@@ -13,25 +13,25 @@ export class TerrainManager {
     // ========================================================================================================================
     // Actual Code (TODO: Remove this header)
     // ========================================================================================================================
-    this.rightMostBlock = new Block(ctx, 0, ctx.canvas.height / 2, 1200, 30); // track so we know when to generate new terrain/blocks
-    this.terrains = new Queue();
-
-    this.terrains.enqueue(new Lava(ctx));
-    this.terrains.enqueue(this.rightMostBlock);
-
-    // ========================================================================================================================
-    // Sandbox Mode (Comment out above)
-    // ========================================================================================================================
-    // this.rightMostBlock = new Block(ctx, 0, ctx.canvas.height / 2 + 250, 1200); // tracked so we know when to generate new terrain/blocks
+    // this.rightMostBlock = new Block(ctx, 0, ctx.canvas.height / 2, 1200, 30); // track so we know when to generate new terrain/blocks
     // this.terrains = new Queue();
 
     // this.terrains.enqueue(new Lava(ctx));
     // this.terrains.enqueue(this.rightMostBlock);
-    // this.terrains.enqueue(new Block(ctx, ctx.canvas.width / 2, ctx.canvas.height / 2 + 230, 200, 20));
-    // this.terrains.enqueue(new Block(ctx, ctx.canvas.width / 2, ctx.canvas.height / 2 + 10, 200, 150));
-    // this.terrains.enqueue(new Block(ctx, ctx.canvas.width / 2 - 400, ctx.canvas.height / 2 + 160, 200, 20));
-    // this.terrains.enqueue(new Block(ctx, ctx.canvas.width / 2 - 400, ctx.canvas.height / 2 + 200, 200, 120));
-    // this.terrains.enqueue(new Block(ctx, ctx.canvas.width / 2 + 200, ctx.canvas.height / 2 - 200, 10, 20));
+
+    // ========================================================================================================================
+    // Sandbox Mode (Comment out above)
+    // ========================================================================================================================
+    this.rightMostBlock = new Block(ctx, 0, ctx.canvas.height / 2 + 250, 1200, 30); // tracked so we know when to generate new terrain/blocks
+    this.terrains = new Queue();
+
+    this.terrains.enqueue(new Lava(ctx));
+    this.terrains.enqueue(this.rightMostBlock);
+    this.terrains.enqueue(new Block(ctx, ctx.canvas.width / 2, ctx.canvas.height / 2 + 230, 200, 20));
+    this.terrains.enqueue(new Block(ctx, ctx.canvas.width / 2, ctx.canvas.height / 2 + 10, 200, 150));
+    this.terrains.enqueue(new Block(ctx, ctx.canvas.width / 2 - 400, ctx.canvas.height / 2 + 160, 200, 20));
+    this.terrains.enqueue(new Block(ctx, ctx.canvas.width / 2 - 400, ctx.canvas.height / 2 + 200, 200, 120));
+    this.terrains.enqueue(new Block(ctx, ctx.canvas.width / 2 + 200, ctx.canvas.height / 2 - 200, 10, 20));
   }
 
   update(secondsElapsed) {

@@ -40,6 +40,7 @@ Ideas and suggestions are welcome by opening issues. :)
 
 ###### BUG FIX
 - Hitbox while ducking now properly aligns with player avatar.
+- Player no longer "clips" into the block when wall sliding.  
 
 ---
 
