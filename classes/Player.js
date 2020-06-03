@@ -8,7 +8,7 @@ export class Player {
 
     this.height = 30;
     this.width = 30;
-    this.x = ctx.canvas.width / 2;
+    this.x = ctx.canvas.width / 2 + 200;
     this.y = 0;
     this.terrainScrollSpeed = terrainScrollSpeed;
     this.bodyColor = 'rgb(3, 214, 144)';
@@ -86,22 +86,15 @@ export class Player {
       //body
       this.ctx.beginPath();
       this.ctx.fillStyle = this.bodyColor;
-      this.ctx.ellipse(
-        this.x + this.width / 2,
-        this.y + this.height / 2 + 10,
-        30,
-        10,
-        0,
-        Math.PI / 4,
-        (3 / 4) * Math.PI,
-        true
-      );
+      this.ctx.ellipse(this.x + this.width / 2, this.y + this.height, 25, this.height, 0, 0, Math.PI, true);
+      // this.ctx.ellipse(this.x + this.width / 2, this.y + this.height, 25, this.height, 0, 0, Math.PI, true);
       this.ctx.fill();
 
       //eye
       this.ctx.fillStyle = this.eyeColor;
+      // this.ctx.fillStyle = 'white';
       this.ctx.beginPath();
-      this.ctx.ellipse(this.x + this.width, this.y + 23, 6, 2, 0, -0.9 * Math.PI, 0.9 * Math.PI);
+      this.ctx.ellipse(this.x + this.width - 4, this.y + this.height / 2, 2, 2, 0, Math.PI, -Math.PI);
       this.ctx.fill();
     } else {
       //body
@@ -169,6 +162,14 @@ export class Player {
 
   setIsDucking(isDucking) {
     this.isDucking = isDucking;
+
+    if (isDucking) {
+      this.y += this.height / 2;
+      this.height /= 2;
+    } else {
+      this.y -= this.height;
+      this.height *= 2;
+    }
   }
 
   respawn() {

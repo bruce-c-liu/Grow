@@ -30,7 +30,6 @@ export class Lava {
   }
 
   update(secondsElapsed, checkPlayerCollision = false, player) {
-    //this check is necessary because player can move off screen
     if (checkPlayerCollision) {
       let playerBottomY = player.y + player.height;
       if (player.state === 'IDLE') {
@@ -42,6 +41,7 @@ export class Lava {
       }
     }
   }
+
   draw() {
     this.ctx.fillStyle = this.color;
     for (let chunk of this.chunks) {

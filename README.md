@@ -37,7 +37,8 @@ Ideas and suggestions are welcome by opening issues. :)
 - Improved collision detection algorithm.
   - Makes fewer unnecessary checks.
 
-###### BUG FIXES
+###### BUG FIX
+- Hitbox while ducking now properly aligns with player avatar.
 
 ---
 

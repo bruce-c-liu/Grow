@@ -25,7 +25,7 @@ export class TerrainManager {
     this.terrains.enqueue(new Block(ctx, ctx.canvas.width/2, ctx.canvas.height / 2 + 10, 200, 150));
     this.terrains.enqueue(new Block(ctx, ctx.canvas.width/2-400, ctx.canvas.height / 2 + 160, 200, 20));
     this.terrains.enqueue(new Block(ctx, ctx.canvas.width/2-400, ctx.canvas.height / 2 + 200, 200, 120));
-    this.terrains.enqueue(new Block(ctx, ctx.canvas.width / 2, ctx.canvas.height / 2 - 200, 10, 20));
+    this.terrains.enqueue(new Block(ctx, ctx.canvas.width / 2 +200, ctx.canvas.height / 2 - 200, 10, 20));
   }
 
   update(secondsElapsed) {
