@@ -1,5 +1,5 @@
 export class Block {
-  constructor(ctx, x, y, width, height = 20) {
+  constructor(ctx, x, y, width, height) {
     this.ctx = ctx;
     this.canvas = ctx.canvas;
 

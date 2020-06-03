@@ -24,6 +24,7 @@ Ideas and suggestions are welcome by opening issues. :)
 ###### CHANGED
 
 - Improved Game Over screen contrast.
+- Blocks now have dynamic height.
 
 ###### UNDER THE HOOD
 
