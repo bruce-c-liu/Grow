@@ -34,8 +34,8 @@ export class Lava {
   resolveCollisions(player) {
     if (!(player.x + player.width - 1 < this.x || player.x > this.x + this.width - 1)) {
       let playerBottomY = player.y + player.height;
-      if (player.airborneState === 'IDLE') {
-        player.airborneState = 'FALLING';
+      if (player.yDirectionState === 'IDLE') {
+        player.yDirectionState = 'FALLING';
       }
       // PLAYER FELL INTO LAVA
       if (playerBottomY >= this.y + 20) {

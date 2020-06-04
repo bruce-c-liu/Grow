@@ -16,6 +16,7 @@ Ideas and suggestions are welcome by opening issues. :)
 
 - Added dash sound effect.
 - Added background music.
+- You can now dash up diagonally!
 
 ###### CHANGED
 

@@ -12,13 +12,15 @@ export class Game {
     ctx.font = '20px Orbitron';
 
     this.gameSpeed = 1;
-    this.terrainScrollSpeed = 10 * this.gameSpeed;
+    this.terrainScrollSpeed = 20 * this.gameSpeed;
     this.player = new Player(ctx, this, this.terrainScrollSpeed, this.gameSpeed);
     this.terrainManager = new TerrainManager(ctx, this, this.player, this.terrainScrollSpeed);
     this.userInterface = new UserInterface(ctx, this, this.player);
 
     this.timeOfLastUpdate = window.performance.now();
     this.state = 'PLAYING'; // [PLAYING, PAUSED, GAME OVER, STATS]
+
+    this.keysDown = new Set();
 
     // ========================================================================================================================
     // Attach Event Handlers
@@ -27,6 +29,8 @@ export class Game {
       backgroundMusic.volume = 0;
       backgroundMusic.play(); // TODO: Don't autoplay.
       if (!repeat) {
+        this.keysDown.add(key);
+
         // only allow jumping/dashing when PLAYING
         if (this.state === 'PLAYING') {
           switch (key) {
@@ -63,8 +67,10 @@ export class Game {
       }
     });
 
-    document.addEventListener('keyup', (e) => {
-      switch (e.key) {
+    document.addEventListener('keyup', ({ key }) => {
+      this.keysDown.delete(key);
+
+      switch (key) {
         case 'a':
           this.player.endStrafe('left');
           break;

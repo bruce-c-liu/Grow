@@ -12,9 +12,8 @@ export class Hole {
 
   update(secondsElapsed, checkPlayerCollision = false, player, terrainScrollSpeed) {
     if (checkPlayerCollision) {
-
-      if (player.airborneState === 'IDLE') {
-        player.airborneState = 'FALLING';
+      if (player.yDirectionState === 'IDLE') {
+        player.yDirectionState = 'FALLING';
       }
       if (player.y >= this.y) {
         // PLAYER DIED
