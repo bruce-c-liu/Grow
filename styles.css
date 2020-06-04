@@ -49,6 +49,7 @@ canvas {
   font-family: 'Press Start 2P', cursive;
   font-size: 25px;
   letter-spacing: 20px;
+  word-spacing: -25px;
 }
 
 .body {

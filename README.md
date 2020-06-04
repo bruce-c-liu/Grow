@@ -20,6 +20,8 @@ Ideas and suggestions are welcome by opening issues. :)
   - By default, dashing while standing dashes to the right.
   - If player dashes into a block, you will wall grab whichever side you are closer to.
     - It is also possible to completely dash through a block.
+- Added dash tail.
+  - Should help players like Cat learn dash range faster.
 
 ###### CHANGED
 
@@ -29,6 +31,7 @@ Ideas and suggestions are welcome by opening issues. :)
 
 - Player now properly loses speed when wall sliding on left side of blocks.
 - Distance Travelled info is now accurate.
+- Jump tail now shows when ducking.
 
 ---
 

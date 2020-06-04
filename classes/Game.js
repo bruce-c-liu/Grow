@@ -10,7 +10,7 @@ export class Game {
     ctx.font = '20px Orbitron';
 
     this.gameSpeed = 1;
-    this.terrainScrollSpeed = 10 * this.gameSpeed;
+    this.terrainScrollSpeed = 400 * this.gameSpeed;
     this.player = new Player(ctx, this, this.terrainScrollSpeed, this.gameSpeed);
     this.terrainManager = new TerrainManager(ctx, this, this.player, this.terrainScrollSpeed);
     this.userInterface = new UserInterface(ctx, this, this.player);
@@ -23,16 +23,19 @@ export class Game {
     // ========================================================================================================================
     document.addEventListener('keydown', ({ repeat, key }) => {
       if (!repeat) {
-        // only allow jumping when PLAYING
+        // only allow jumping/dashing when PLAYING
         if (this.state === 'PLAYING') {
           switch (key) {
             case 'w':
               this.player.jump();
               break;
+            case ' ':
+              this.player.dash();
+              break;
           }
         }
 
-        // allow buffering of strafe/ducking/dashing when PAUSED
+        // allow buffering of strafe/ducking when PAUSED
         if (this.state === 'PLAYING' || this.state === 'PAUSED') {
           switch (key) {
             case 'a':
@@ -43,9 +46,6 @@ export class Game {
               break;
             case 's':
               this.player.setIsDucking(true);
-              break;
-            case ' ':
-              this.player.dash();
               break;
             case 'p':
               this.togglePause();
