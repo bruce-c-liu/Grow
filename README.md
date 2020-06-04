@@ -17,6 +17,7 @@ Ideas and suggestions are welcome by opening issues. :)
 - Added dash sound effect.
 - Added background music.
 - You can now dash up diagonally!
+- Press M to mute/unmute background music.
 
 ###### CHANGED
 

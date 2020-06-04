@@ -3,6 +3,7 @@ import { TerrainManager } from './TerrainManager.js';
 import { UserInterface } from './UserInterface.js';
 
 const backgroundMusic = new Audio('assets/sounds/bgm/last-cyber-dance.ogg');
+backgroundMusic.volume = 0.4;
 
 export class Game {
   constructor(ctx) {
@@ -12,7 +13,7 @@ export class Game {
     ctx.font = '20px Orbitron';
 
     this.gameSpeed = 1;
-    this.terrainScrollSpeed = 20 * this.gameSpeed;
+    this.terrainScrollSpeed = 300 * this.gameSpeed;
     this.player = new Player(ctx, this, this.terrainScrollSpeed, this.gameSpeed);
     this.terrainManager = new TerrainManager(ctx, this, this.player, this.terrainScrollSpeed);
     this.userInterface = new UserInterface(ctx, this, this.player);
@@ -26,10 +27,19 @@ export class Game {
     // Attach Event Handlers
     // ========================================================================================================================
     document.addEventListener('keydown', ({ repeat, key }) => {
-      backgroundMusic.volume = 0;
-      backgroundMusic.play(); // TODO: Don't autoplay.
+
       if (!repeat) {
         this.keysDown.add(key);
+
+        // TODO: Fix this. This is a temporary hack.
+        if (key === 'm') {
+          if (backgroundMusic.paused) {
+            backgroundMusic.play(); 
+          } else {
+            backgroundMusic.pause(); 
+          }
+
+        }
 
         // only allow jumping/dashing when PLAYING
         if (this.state === 'PLAYING') {
