@@ -1,14 +1,40 @@
 # Grow
 
-Roguelite sidescroller game where you get stronger every run!
+A rogue-lite sidescroller game where you get stronger every run!
 
 Play at: https://bruce-c-liu.github.io/Grow/
 
-## Contributing
+# Contributing
 
 Ideas and suggestions are welcome by opening issues. :)
 
-## Patch Notes
+# Patch Notes
+
+##### 6/4/20
+
+###### NEW
+
+- Added dash sound effect.
+- Added background music.
+
+###### CHANGED
+
+- When wall grabbing, releasing the key in the direction of the wall grab will now release the grab.
+  - Before, releasing the key did nothing.
+  - This should make getting off a wall feel more snappy.
+  - Players still retain the ability to slowly slide down a wall by holding down the direction key.
+
+###### UNDER THE HOOD
+
+- Collisions are now checked _after_ updates occur.
+  - Before, there were some inconsistencies when handling this.
+  - Should prevent a whole class of bugs down the line.
+
+###### BUG FIX
+
+- Dashing left now properly plays its sound effect.
+
+---
 
 ##### 6/3/20
 
@@ -16,12 +42,12 @@ Ideas and suggestions are welcome by opening issues. :)
 
 - Added dash mechanic!
   - Press SPACE to dash.
-  - Player will dash horizontally in the direction that it is currently moving in.
-  - By default, dashing while standing dashes to the right.
-  - If player dashes into a block, you will wall grab whichever side you are closer to.
+  - Player will dash horizontally in the direction that they are moving in.
+  - By default, dashing while standing still causes player to dash to the right.
+  - Dashing into a block will cause player to wall grab whichever side they are closer to.
     - It is also possible to completely dash through a block.
 - Added dash tail.
-  - Should help players like Cat learn dash range faster.
+  - Should help players learn dash range faster.
 
 ###### CHANGED
 

@@ -1,4 +1,5 @@
-const jumpSFX = new Audio('assets/sounds/jump2.wav');
+const jumpSFX = new Audio('assets/sounds/sfx/jump.wav');
+const dashSFX = new Audio('assets/sounds/sfx/dash.wav');
 
 export class Player {
   constructor(ctx, game, terrainScrollSpeed, gameSpeed) {
@@ -41,7 +42,6 @@ export class Player {
   }
 
   update(secondsElapsed) {
-    // console.log(this.dashAfterimages);
     switch (this.game.state) {
       case 'PLAYING':
         if (this.x + this.width >= 0 && this.x <= this.canvas.width) {
@@ -181,6 +181,11 @@ export class Player {
       this.x += this.dashDistance;
       dashDirection = 1;
     }
+
+    if (!dashSFX.paused) {
+      dashSFX.load();
+    }
+    dashSFX.play();
 
     this.dashAfterimages.push(
       {

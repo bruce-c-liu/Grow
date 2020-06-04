@@ -13,16 +13,16 @@ export class Block {
     this.yBuffer = 20; // A tolerance buffer for when the player is within a block
   }
 
-  update(secondsElapsed, checkPlayerCollision = false, player, terrainScrollSpeed) {
-    // update position FIRST, so when checking collision with player, we have the
-    // most up-to-date position
+  update(secondsElapsed, terrainScrollSpeed) {
     this.x -= terrainScrollSpeed * secondsElapsed;
+  }
 
-    if (checkPlayerCollision) {
-      const playerRightX = player.x + player.width;
-      const playerBottomY = player.y + player.height;
-      const blockRightX = this.x + this.width;
-      const blockBottomY = this.y + this.height;
+  resolveCollisions(player) {
+    if (!(player.x + player.width - 1 < this.x || player.x > this.x + this.width - 1)) {
+      const playerRightX = player.x + player.width - 1;
+      const playerBottomY = player.y + player.height - 1;
+      const blockRightX = this.x + this.width - 1;
+      const blockBottomY = this.y + this.height - 1;
 
       const isAboveBlock = this.y <= playerBottomY && playerBottomY <= this.y + this.yBuffer;
       const isBelowBlock = blockBottomY - this.yBuffer <= player.y && player.y <= blockBottomY;
@@ -37,17 +37,17 @@ export class Block {
       } else if (isBelowBlock && isInHorizontalZone) {
         // player head hits bottom of block
         player.ySpeed = 0;
-        player.y = this.y + this.height;
+        player.y = this.y + this.height + 1;
       } else if (playerRightX <= this.x + this.width / 2 && isInVerticalZone) {
         // player grabs left wall
         player.ySpeed = 0;
         player.curJumps = 0;
-        player.x = this.x - player.width + 1;
+        player.x = this.x - player.width;
       } else if (playerRightX > this.x + this.width / 2 && isInVerticalZone) {
         // player grabs right wall
         player.ySpeed = 0;
         player.curJumps = 0;
-        player.x = blockRightX;
+        player.x = blockRightX + 1;
       }
     }
   }
@@ -56,6 +56,4 @@ export class Block {
     this.ctx.fillStyle = this.color;
     this.ctx.fillRect(this.x, this.y, this.width, this.height);
   }
-
-  checkCollision() {}
 }

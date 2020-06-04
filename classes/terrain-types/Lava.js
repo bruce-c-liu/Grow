@@ -29,8 +29,10 @@ export class Lava {
     }
   }
 
-  update(secondsElapsed, checkPlayerCollision = false, player) {
-    if (checkPlayerCollision) {
+  update() {}
+
+  resolveCollisions(player) {
+    if (!(player.x + player.width - 1 < this.x || player.x > this.x + this.width - 1)) {
       let playerBottomY = player.y + player.height;
       if (player.airborneState === 'IDLE') {
         player.airborneState = 'FALLING';

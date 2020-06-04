@@ -53,16 +53,17 @@ class Queue {
   }
 
   // Iterates and returns Nodes. Does NOT return node.val.
-  // This is so that we can call this.remove(node).
+  // NOTE: Even though this is a queue, it iterates starting from LAST enqueued item.
+  // Why? Lava must be the last drawn item, even though it's always at the front of the queue.
   [Symbol.iterator]() {
     return {
-      current: this.dummy.prev,
+      current: this.dummy.next,
       dummy: this.dummy,
 
       next() {
         if (this.current !== this.dummy) {
-          this.current = this.current.prev;
-          return { done: false, value: this.current.next };
+          this.current = this.current.next;
+          return { done: false, value: this.current.prev };
         } else {
           return { done: true };
         }

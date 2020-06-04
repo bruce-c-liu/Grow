@@ -38,25 +38,20 @@ export class TerrainManager {
     switch (this.game.state) {
       case 'PLAYING':
       case 'GAME OVER':
-        // console.log(this.terrains.size);
+        // update terrain and check for collisions
         for (let node of this.terrains) {
           let { val: terrain } = node;
 
           if (terrain.x + terrain.width <= 0) {
-            // dequeue terrain that have travelled offscreen
+            // delete terrain that have travelled offscreen
             this.terrains.remove(node);
-          } else if (
-            this.player.x > terrain.x + terrain.width ||
-            this.player.x + this.player.width < terrain.x
-          ) {
-            // skip collision-check since player isn't within horizontal range of terrain
-            terrain.update(secondsElapsed, false, null, this.terrainScrollSpeed);
           } else {
-            terrain.update(secondsElapsed, true, this.player, this.terrainScrollSpeed);
+            terrain.update(secondsElapsed, this.terrainScrollSpeed);
+            terrain.resolveCollisions(this.player);
           }
         }
 
-        // generate new terrain
+        // generate new terrain if required
         if (this.rightMostBlock.x + this.rightMostBlock.width <= this.canvas.width - 300) {
           this.rightMostBlock = new Block(
             this.ctx,

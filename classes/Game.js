@@ -2,6 +2,8 @@ import { Player } from './Player.js';
 import { TerrainManager } from './TerrainManager.js';
 import { UserInterface } from './UserInterface.js';
 
+const backgroundMusic = new Audio('assets/sounds/bgm/last-cyber-dance.ogg');
+
 export class Game {
   constructor(ctx) {
     this.ctx = ctx;
@@ -10,7 +12,7 @@ export class Game {
     ctx.font = '20px Orbitron';
 
     this.gameSpeed = 1;
-    this.terrainScrollSpeed = 400 * this.gameSpeed;
+    this.terrainScrollSpeed = 10 * this.gameSpeed;
     this.player = new Player(ctx, this, this.terrainScrollSpeed, this.gameSpeed);
     this.terrainManager = new TerrainManager(ctx, this, this.player, this.terrainScrollSpeed);
     this.userInterface = new UserInterface(ctx, this, this.player);
@@ -22,6 +24,8 @@ export class Game {
     // Attach Event Handlers
     // ========================================================================================================================
     document.addEventListener('keydown', ({ repeat, key }) => {
+      backgroundMusic.volume = 0;
+      backgroundMusic.play(); // TODO: Don't autoplay.
       if (!repeat) {
         // only allow jumping/dashing when PLAYING
         if (this.state === 'PLAYING') {

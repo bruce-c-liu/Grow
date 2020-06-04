@@ -1,0 +1,5 @@
+========================================================================================
+sounds/bgm
+========================================================================================
+last-cyber-dance: https://opengameart.org/content/last-cyber-dance
+90s-space-shooter: https://opengameart.org/content/stereotypical-90s-space-shooter-music

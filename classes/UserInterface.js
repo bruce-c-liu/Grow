@@ -13,7 +13,7 @@ export class UserInterface {
     // this.expBarGradient.addColorStop(1, '#514A9D');
   }
 
-  update(secondsElapsed) {
+  update() {
     switch (this.game.state) {
       case 'PLAYING':
       case 'PAUSED':
