@@ -2,13 +2,20 @@ const jumpSFX = new Audio('../sounds/sfx/jump.wav');
 const dashSFX = new Audio('../sounds/sfx/dash.wav');
 dashSFX.volume = 0.6;
 
+import { randomIntBetween } from '../utils.js';
+
 export class Player {
-  constructor({ ctx, game, terrainScrollSpeed, gameSpeed }) {
+  constructor({ ctx, game, terrainScrollSpeed, gameSpeed, isSelf }) {
     this.ctx = ctx;
     this.canvas = ctx.canvas;
     this.game = game;
+    this.isSelf = isSelf;
 
-    this.bodyColor = 'rgb(3, 214, 144)';
+    // rgb(3, 214, 144)
+    this.bodyColor = `rgb(${randomIntBetween(0, 255)}, ${randomIntBetween(0, 255)}, ${randomIntBetween(
+      0,
+      255
+    )})`;
     this.eyeColor = 'black';
 
     this.height = 30;
@@ -118,8 +125,9 @@ export class Player {
         this.ctx.globalAlpha = afterimage.opacity;
         this.ctx.fillRect(afterimage.x, afterimage.y, afterimage.length, afterimage.length);
       }
-      this.ctx.globalAlpha = 1;
     }
+
+    this.ctx.globalAlpha = this.isSelf ? 1 : 0.6;
 
     if (this.isDucking) {
       //body
@@ -145,6 +153,8 @@ export class Player {
       this.ctx.ellipse(this.x + this.width - 7, this.y + 12, 3, 6, 0, -0.9 * Math.PI, 0.9 * Math.PI);
       this.ctx.fill();
     }
+
+    this.ctx.globalAlpha = 1;
   }
 
   strafe(direction) {

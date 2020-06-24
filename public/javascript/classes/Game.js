@@ -3,7 +3,7 @@ import { TerrainManager } from './TerrainManager.js';
 import { UserInterface } from './UserInterface.js';
 
 const backgroundMusic = new Audio('../sounds/bgm/last-cyber-dance.ogg');
-backgroundMusic.volume = 0.4;
+backgroundMusic.volume = 0.25;
 
 export class Game {
   constructor(ctx) {
@@ -13,12 +13,13 @@ export class Game {
     ctx.font = '20px Orbitron';
 
     this.gameSpeed = 1;
-    this.terrainScrollSpeed = 0 * this.gameSpeed;
+    this.terrainScrollSpeed = 300 * this.gameSpeed;
     this.player = new Player({
       ctx: ctx,
       game: this,
       terrainScrollSpeed: this.terrainScrollSpeed,
       gameSpeed: this.gameSpeed,
+      isSelf: true
     });
     this.players = { self: this.player };
     this.terrainManager = new TerrainManager(ctx, this, this.players, this.terrainScrollSpeed);
@@ -39,6 +40,7 @@ export class Game {
         game: this,
         terrainScrollSpeed: this.terrainScrollSpeed,
         gameSpeed: this.gameSpeed,
+        isSelf: false
       });
       console.log(`new player joined: ${id}`);
 
@@ -52,6 +54,7 @@ export class Game {
           game: this,
           terrainScrollSpeed: this.terrainScrollSpeed,
           gameSpeed: this.gameSpeed,
+          isSelf: false
         });
       }
     });
