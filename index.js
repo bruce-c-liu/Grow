@@ -31,6 +31,11 @@ io.on('connection', (socket) => {
 
   playerIDs.add(socket.id);
 
+  //position = {x,y}
+  socket.on('playerPositionUpdated', (position) =>
+    socket.broadcast.emit('playerPositionUpdated', { ...position, id: socket.id })
+  );
+
   socket.on('disconnect', () => {
     socket.broadcast.emit('playerDisconnected', { id: socket.id });
     playerIDs.delete(socket.id);

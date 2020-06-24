@@ -127,7 +127,7 @@ export class Player {
       }
     }
 
-    this.ctx.globalAlpha = this.isSelf ? 1 : 0.6;
+    this.ctx.globalAlpha = this.isSelf ? 1 : 0.5;
 
     if (this.isDucking) {
       //body

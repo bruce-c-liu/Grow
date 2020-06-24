@@ -13,13 +13,13 @@ export class Game {
     ctx.font = '20px Orbitron';
 
     this.gameSpeed = 1;
-    this.terrainScrollSpeed = 300 * this.gameSpeed;
+    this.terrainScrollSpeed = 0 * this.gameSpeed;
     this.player = new Player({
       ctx: ctx,
       game: this,
       terrainScrollSpeed: this.terrainScrollSpeed,
       gameSpeed: this.gameSpeed,
-      isSelf: true
+      isSelf: true,
     });
     this.players = { self: this.player };
     this.terrainManager = new TerrainManager(ctx, this, this.players, this.terrainScrollSpeed);
@@ -34,13 +34,14 @@ export class Game {
     // Set up sockets
     // ========================================================================================================================
     const socket = io.connect();
+
     socket.on('playerConnected', ({ id }) => {
       this.players[id] = new Player({
         ctx: ctx,
         game: this,
         terrainScrollSpeed: this.terrainScrollSpeed,
         gameSpeed: this.gameSpeed,
-        isSelf: false
+        isSelf: false,
       });
       console.log(`new player joined: ${id}`);
 
@@ -54,9 +55,18 @@ export class Game {
           game: this,
           terrainScrollSpeed: this.terrainScrollSpeed,
           gameSpeed: this.gameSpeed,
-          isSelf: false
+          isSelf: false,
         });
       }
+    });
+
+    setInterval(() => {
+      socket.emit('playerPositionUpdated', { x: this.player.x, y: this.player.y });
+    }, 1000 / 60);
+
+    socket.on('playerPositionUpdated', ({ id, x, y }) => {
+      this.players[id].x = x;
+      this.players[id].y = y;
     });
 
     socket.on('playerDisconnected', ({ id }) => {
