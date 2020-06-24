@@ -2,7 +2,7 @@ import { Player } from './Player.js';
 import { TerrainManager } from './TerrainManager.js';
 import { UserInterface } from './UserInterface.js';
 
-const backgroundMusic = new Audio('assets/sounds/bgm/last-cyber-dance.ogg');
+const backgroundMusic = new Audio('../sounds/bgm/last-cyber-dance.ogg');
 backgroundMusic.volume = 0.4;
 
 export class Game {
@@ -13,9 +13,15 @@ export class Game {
     ctx.font = '20px Orbitron';
 
     this.gameSpeed = 1;
-    this.terrainScrollSpeed = 300 * this.gameSpeed;
-    this.player = new Player(ctx, this, this.terrainScrollSpeed, this.gameSpeed);
-    this.terrainManager = new TerrainManager(ctx, this, this.player, this.terrainScrollSpeed);
+    this.terrainScrollSpeed = 0 * this.gameSpeed;
+    this.player = new Player({
+      ctx: ctx,
+      game: this,
+      terrainScrollSpeed: this.terrainScrollSpeed,
+      gameSpeed: this.gameSpeed,
+    });
+    this.players = { self: this.player };
+    this.terrainManager = new TerrainManager(ctx, this, this.players, this.terrainScrollSpeed);
     this.userInterface = new UserInterface(ctx, this, this.player);
 
     this.timeOfLastUpdate = window.performance.now();
@@ -24,21 +30,51 @@ export class Game {
     this.keysDown = new Set();
 
     // ========================================================================================================================
+    // Set up sockets
+    // ========================================================================================================================
+    const socket = io.connect();
+    socket.on('playerConnected', ({ id }) => {
+      this.players[id] = new Player({
+        ctx: ctx,
+        game: this,
+        terrainScrollSpeed: this.terrainScrollSpeed,
+        gameSpeed: this.gameSpeed,
+      });
+      console.log(`new player joined: ${id}`);
+
+      // socket.emit('playerCreated', this.players);
+    });
+
+    socket.on('playersInRoom', (playerIDs) => {
+      for (let id of playerIDs) {
+        this.players[id] = new Player({
+          ctx: ctx,
+          game: this,
+          terrainScrollSpeed: this.terrainScrollSpeed,
+          gameSpeed: this.gameSpeed,
+        });
+      }
+    });
+
+    socket.on('playerDisconnected', ({ id }) => {
+      delete this.players[id];
+      console.log(`player disconnected: ${id}`);
+    });
+
+    // ========================================================================================================================
     // Attach Event Handlers
     // ========================================================================================================================
     document.addEventListener('keydown', ({ repeat, key }) => {
-
       if (!repeat) {
         this.keysDown.add(key);
 
         // TODO: Fix this. This is a temporary hack.
         if (key === 'm') {
           if (backgroundMusic.paused) {
-            backgroundMusic.play(); 
+            backgroundMusic.play();
           } else {
-            backgroundMusic.pause(); 
+            backgroundMusic.pause();
           }
-
         }
 
         // only allow jumping/dashing when PLAYING
@@ -114,10 +150,21 @@ export class Game {
 
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    this.player.update(secondsElapsed);
+    // Update all objects
+    for (let player of Object.values(this.players)) {
+      player.update(secondsElapsed);
+    }
+    // TODO: REMOVE?
+    // this.player.update(secondsElapsed);
     this.terrainManager.update(secondsElapsed);
     this.userInterface.update(secondsElapsed);
-    this.player.draw();
+
+    // Draw all objects
+    for (let player of Object.values(this.players)) {
+      player.draw();
+    }
+    // TODO: REMOVE?
+    // this.player.draw();
     this.terrainManager.draw();
     this.userInterface.draw();
 

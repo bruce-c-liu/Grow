@@ -3,11 +3,11 @@ import { Lava } from './terrain-types/Lava.js';
 import { randomIntBetween, Queue } from '../utils.js';
 
 export class TerrainManager {
-  constructor(ctx, game, player, terrainScrollSpeed) {
+  constructor(ctx, game, players, terrainScrollSpeed) {
     this.ctx = ctx;
     this.canvas = ctx.canvas;
     this.game = game;
-    this.player = player;
+    this.players = players;
     this.terrainScrollSpeed = terrainScrollSpeed;
 
     // ========================================================================================================================
@@ -47,7 +47,10 @@ export class TerrainManager {
             this.terrains.remove(node);
           } else {
             terrain.update(secondsElapsed, this.terrainScrollSpeed);
-            terrain.resolveCollisions(this.player);
+
+            for (let player of Object.values(this.players)) {
+              terrain.resolveCollisions(player);
+            }
           }
         }
 

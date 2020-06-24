@@ -1,9 +1,9 @@
-const jumpSFX = new Audio('assets/sounds/sfx/jump.wav');
-const dashSFX = new Audio('assets/sounds/sfx/dash.wav');
+const jumpSFX = new Audio('../sounds/sfx/jump.wav');
+const dashSFX = new Audio('../sounds/sfx/dash.wav');
 dashSFX.volume = 0.6;
 
 export class Player {
-  constructor(ctx, game, terrainScrollSpeed, gameSpeed) {
+  constructor({ ctx, game, terrainScrollSpeed, gameSpeed }) {
     this.ctx = ctx;
     this.canvas = ctx.canvas;
     this.game = game;
