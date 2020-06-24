@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
+const PORT = process.env.PORT || 3000;
 
 //middleware
 const cookieParser = require('cookie-parser');
@@ -16,8 +17,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => res.sendFile(path.resolve('public/html/index.html')));
 
-server.listen(3000, () => {
-  console.log(`App listening at http://localhost:${3000}`);
+server.listen(PORT, () => {
+  console.log(`App listening at http://localhost:${PORT}`);
 });
 
 const playerIDs = new Set();
