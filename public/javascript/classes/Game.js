@@ -62,7 +62,7 @@ export class Game {
 
     setInterval(() => {
       socket.emit('playerPositionUpdated', { x: this.player.x, y: this.player.y });
-    }, 1000 / 60);
+    }, 1000 / 90);
 
     socket.on('playerPositionUpdated', ({ id, x, y }) => {
       this.players[id].x = x;
