@@ -13,7 +13,7 @@ export class Game {
     ctx.font = '20px Orbitron';
 
     this.gameSpeed = 1;
-    this.terrainScrollSpeed = 0 * this.gameSpeed;
+    this.terrainScrollSpeed = 250 * this.gameSpeed;
     this.player = new Player({
       ctx: ctx,
       game: this,
@@ -62,7 +62,7 @@ export class Game {
 
     setInterval(() => {
       socket.emit('playerPositionUpdated', { x: this.player.x, y: this.player.y });
-    }, 1000 / 90);
+    }, 1000 / 50);
 
     socket.on('playerPositionUpdated', ({ id, x, y }) => {
       this.players[id].x = x;
@@ -165,7 +165,7 @@ export class Game {
 
     // Update all objects
     for (let player of Object.values(this.players)) {
-      player.update(secondsElapsed);
+      if (player.isSelf) player.update(secondsElapsed);
     }
     // TODO: REMOVE?
     // this.player.update(secondsElapsed);
