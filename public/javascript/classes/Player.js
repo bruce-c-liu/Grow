@@ -98,9 +98,8 @@ export class Player {
     switch (this.game.state) {
       case 'PLAYING':
       case 'PAUSED':
-        this._draw();
-        break;
       case 'GAME OVER':
+        this._draw();
         break;
       case 'STATS':
         break;

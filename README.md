@@ -2,7 +2,7 @@
 
 A rogue-lite sidescroller game where you get stronger every run!
 
-Play at: https://bruce-c-liu.github.io/Grow/
+Play at: https://frozen-dawn-18098.herokuapp.com/
 
 # Contributing
 

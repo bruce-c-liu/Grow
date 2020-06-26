@@ -22,16 +22,33 @@ export class TerrainManager {
     // ========================================================================================================================
     // Sandbox Mode (Comment out above)
     // ========================================================================================================================
-    this.rightMostBlock = new Block(ctx, 0, ctx.canvas.height / 2 + 250, 1200, 30); // tracked so we know when to generate new terrain/blocks
     this.terrains = new Queue();
 
     this.terrains.enqueue(new Lava(ctx));
-    this.terrains.enqueue(this.rightMostBlock);
-    this.terrains.enqueue(new Block(ctx, ctx.canvas.width / 2, ctx.canvas.height / 2 + 230, 200, 20));
-    this.terrains.enqueue(new Block(ctx, ctx.canvas.width / 2, ctx.canvas.height / 2 + 10, 200, 150));
-    this.terrains.enqueue(new Block(ctx, ctx.canvas.width / 2 - 400, ctx.canvas.height / 2 + 160, 200, 20));
-    this.terrains.enqueue(new Block(ctx, ctx.canvas.width / 2 - 400, ctx.canvas.height / 2 + 200, 200, 120));
-    this.terrains.enqueue(new Block(ctx, ctx.canvas.width / 2 + 200, ctx.canvas.height / 2 - 200, 10, 20));
+    const terrains = [
+      new Block(ctx, 0, 350, 1200, 300),
+      //--------------------------------------
+      // new Block(ctx, 1500, 350, 200, 40),
+      // new Block(ctx, 2500, 350, 200, 40),
+      //--------------------------------------
+      // new Block(ctx, 1700, -2000, 800, 2300),
+      // new Block(ctx, 2650, 500, 200, 40),
+      //--------------------------------------
+      new Block(ctx, 1400, -2000, 160, 2200),
+      new Block(ctx, 2400, -2000, 160, 2300),
+      new Block(ctx, 3400, -2000, 160, 2400),
+      new Block(ctx, 4400, -2000, 160, 2450),
+    ];
+
+    for (let terrain of terrains) {
+      this.terrains.enqueue(terrain);
+    }
+
+    // this.terrains.enqueue(new Block(ctx, ctx.canvas.width / 2, ctx.canvas.height / 2 + 230, 200, 20));
+    // this.terrains.enqueue(new Block(ctx, ctx.canvas.width / 2, ctx.canvas.height / 2 + 10, 200, 150));
+    // this.terrains.enqueue(new Block(ctx, ctx.canvas.width / 2 - 400, ctx.canvas.height / 2 + 160, 200, 20));
+    // this.terrains.enqueue(new Block(ctx, ctx.canvas.width / 2 - 400, ctx.canvas.height / 2 + 200, 200, 120));
+    // this.terrains.enqueue(new Block(ctx, ctx.canvas.width / 2 + 200, ctx.canvas.height / 2 - 200, 10, 20));
   }
 
   update(secondsElapsed) {
@@ -52,19 +69,6 @@ export class TerrainManager {
               terrain.resolveCollisions(player);
             }
           }
-        }
-
-        // generate new terrain if required
-        if (this.rightMostBlock.x + this.rightMostBlock.width <= this.canvas.width - 300) {
-          this.rightMostBlock = new Block(
-            this.ctx,
-            this.canvas.width,
-            randomIntBetween(140, this.canvas.height - 35),
-            randomIntBetween(25, 200),
-            randomIntBetween(25, 200)
-          );
-
-          this.terrains.enqueue(this.rightMostBlock);
         }
         break;
       case 'PAUSED':
